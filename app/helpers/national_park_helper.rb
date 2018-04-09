@@ -1,0 +1,2 @@
+module NationalParkHelper
+end
