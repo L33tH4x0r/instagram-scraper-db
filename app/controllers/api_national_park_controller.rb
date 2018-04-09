@@ -1,9 +1,9 @@
 class ApiNationalParkController < ApplicationController
   def create
-    json_response NationalPark.create(name: params[:name], url: params[:url])
+    json_response ApiInputService::NationalParkApi.create(params)
   end
 
   def index
-    json_response NationalPark.all
+    json_response ApiInputService::NationalParkApi.index
   end
 end
