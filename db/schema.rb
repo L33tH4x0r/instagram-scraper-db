@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20180411211328) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "national_park_id"
-    t.integer "poster_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

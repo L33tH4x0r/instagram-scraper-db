@@ -20,11 +20,13 @@ class PosterApi < ApiInputService
   private
   def create_associations
     # Create poster
-    @poster = User.create(name: @name)
+    @poster = User.create(name: @name, url: @url, followers_count: @follower_count)
     # Check if post needs to get created
     unless @post
-      @post = Post.create(national_park_id: @national_park.id, poster_id: @poster.id)
+      @post = Post.create(national_park_id: @national_park.id, user_id: @poster.id)
     end
+
+    @poster.posts << @post
 
     return @national_park.save && @post.save && @poster.save
   end
