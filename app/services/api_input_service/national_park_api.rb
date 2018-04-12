@@ -1,11 +1,12 @@
-class ApiInputService
-  module NationalParkApi
-    def self.index
-      return NationalPark.all
-    end
+class NationalParkApi < ApiInputService
+  def initialize(opts={})
+    super
+  end
+  def index
+    return NationalPark.all
+  end
 
-    def self.create params
-      return NationalPark.create(name: params[:name], url: params[:url])
-    end
+  def create
+    return NationalPark.create(name: @name, url: @url)
   end
 end

@@ -12,6 +12,15 @@ Rails.application.routes.draw do
     scope "/poster" do
       post '/create' => 'api_poster#create'
     end
+    scope "/follower" do
+      post '/create' => 'api_follower#create'
+    end
+    scope "/liker" do
+      post '/create' => 'api_liker#create'
+    end
+    scope "/post" do
+      post '/create' => 'api_post#create'
+    end
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

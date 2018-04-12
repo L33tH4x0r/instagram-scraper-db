@@ -10,35 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180330051842) do
+ActiveRecord::Schema.define(version: 20180411211328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "follower_posters", force: :cascade do |t|
-    t.bigint "follower_id"
-    t.bigint "poster_id"
-    t.index ["follower_id"], name: "index_follower_posters_on_follower_id"
-    t.index ["poster_id"], name: "index_follower_posters_on_poster_id"
-  end
-
-  create_table "followers", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "liker_posts", id: false, force: :cascade do |t|
-    t.bigint "follower_id"
+  create_table "likes", force: :cascade do |t|
+    t.bigint "liker_id"
     t.bigint "post_id"
-    t.index ["follower_id"], name: "index_liker_posts_on_follower_id"
-    t.index ["post_id"], name: "index_liker_posts_on_post_id"
-  end
-
-  create_table "likers", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["liker_id"], name: "index_likes_on_liker_id"
+    t.index ["post_id"], name: "index_likes_on_post_id"
   end
 
   create_table "national_parks", force: :cascade do |t|
@@ -48,13 +31,17 @@ ActiveRecord::Schema.define(version: 20180330051842) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "posters", force: :cascade do |t|
-    t.string "name"
+  create_table "posts", force: :cascade do |t|
+    t.integer "national_park_id"
+    t.integer "poster_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "posts", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "url"
+    t.integer "followers_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
