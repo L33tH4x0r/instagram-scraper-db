@@ -23,7 +23,7 @@ class PosterApi < ApiInputService
     @poster = User.create(name: @name, url: @url, followers_count: @follower_count)
     # Check if post needs to get created
     unless @post
-      @post = Post.create(national_park_id: @national_park.id, user_id: @poster.id)
+      @post = Post.create(national_park_id: @national_park.id, user_id: @poster.id, likes_count: @likes_count.to_i)
     end
 
     @poster.posts << @post
