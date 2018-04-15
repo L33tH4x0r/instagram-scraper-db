@@ -12438,3 +12438,72 @@ Migrating to CreatePosts (20180411211328)
   [1m[36mPost Load (0.5ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."user_id" = $1 ORDER BY "posts"."id" ASC LIMIT $2[0m  [["user_id", 3], ["LIMIT", 1]]
   [1m[36mPost Load (0.7ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" ORDER BY "posts"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (21.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (29.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (282.4ms)[0m  [1m[35mDROP DATABASE IF EXISTS "instagram-scraper-db_development"[0m
+  [1m[35m (111.0ms)[0m  [1m[35mDROP DATABASE IF EXISTS "instagram-scraper-db_test"[0m
+  [1m[35m (1575.0ms)[0m  [1m[35mCREATE DATABASE "instagram-scraper-db_development" ENCODING = 'unicode'[0m
+  [1m[35m (444.2ms)[0m  [1m[35mCREATE DATABASE "instagram-scraper-db_test" ENCODING = 'unicode'[0m
+  [1m[35m (57.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (9.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_try_advisory_lock(867330030299100060)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateNationalParks (20180330031321)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (12.9ms)[0m  [1m[35mCREATE TABLE "national_parks" ("id" bigserial primary key, "name" character varying, "url" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (1.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180330031321"]]
+  [1m[35m (1.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateUsers (20180330031344)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (8.5ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "name" character varying, "url" character varying, "followers_count" integer DEFAULT 0, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (4.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180330031344"]]
+  [1m[35m (1.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateLikes (20180330031351)
+  [1m[35m (1.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (7.5ms)[0m  [1m[35mCREATE TABLE "likes" ("id" bigserial primary key, "user_id" bigint, "post_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE  INDEX  "index_likes_on_user_id" ON "likes"  ("user_id")[0m
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE  INDEX  "index_likes_on_post_id" ON "likes"  ("post_id")[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180330031351"]]
+  [1m[35m (3.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePosts (20180411211328)
+  [1m[35m (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE TABLE "posts" ("id" bigserial primary key, "national_park_id" integer, "user_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180411211328"]]
+  [1m[35m (5.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (3.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2018-04-12 18:13:26.009529"], ["updated_at", "2018-04-12 18:13:26.009529"]]
+  [1m[35m (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(867330030299100060)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.6ms)[0m  [1m[32mINSERT INTO "national_parks" ("name", "url", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Grand Canyon National Park"], ["url", "google.com"], ["created_at", "2018-04-12 18:13:48.411279"], ["updated_at", "2018-04-12 18:13:48.411279"]]
+  [1m[35m (12.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mNationalPark Load (0.5ms)[0m  [1m[34mSELECT  "national_parks".* FROM "national_parks" ORDER BY "national_parks"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mNationalPark Load (0.3ms)[0m  [1m[34mSELECT  "national_parks".* FROM "national_parks" WHERE "national_parks"."name" = $1 LIMIT $2[0m  [["name", "Grand Canyon National Park"], ["LIMIT", 1]]
+  [1m[35m (2.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "users" ("name", "url", "followers_count", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "austin"], ["url", "dringo.io"], ["followers_count", nil], ["created_at", "2018-04-12 18:13:54.510972"], ["updated_at", "2018-04-12 18:13:54.510972"]]
+  [1m[35m (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNationalPark Load (0.3ms)[0m  [1m[34mSELECT  "national_parks".* FROM "national_parks" WHERE "national_parks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "posts" ("national_park_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["national_park_id", 1], ["user_id", 1], ["created_at", "2018-04-12 18:13:54.774748"], ["updated_at", "2018-04-12 18:13:54.774748"]]
+  [1m[35m (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (152.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "users"[0m
+  [1m[35m (144.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "posts"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (48.6ms)[0m  [1m[32mINSERT INTO "users" ("name", "url", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Test"], ["url", "google.com"], ["created_at", "2018-04-15 16:42:09.804634"], ["updated_at", "2018-04-15 16:42:09.804634"]]
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mPost Load (0.4ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]

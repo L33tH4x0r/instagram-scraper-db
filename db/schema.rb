@@ -16,12 +16,12 @@ ActiveRecord::Schema.define(version: 20180411211328) do
   enable_extension "plpgsql"
 
   create_table "likes", force: :cascade do |t|
-    t.bigint "liker_id"
+    t.bigint "user_id"
     t.bigint "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["liker_id"], name: "index_likes_on_liker_id"
     t.index ["post_id"], name: "index_likes_on_post_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "national_parks", force: :cascade do |t|
